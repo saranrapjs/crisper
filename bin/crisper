@@ -32,11 +32,6 @@ var args = nopt(
 
 var source = args.source || (args.remain && args.remain[0]);
 
-if (!source) {
-  console.log('Missing source html file!');
-  process.exit(1);
-}
-
 if (!args.html) {
   console.log('Missing output html file!');
   process.exit(1);
@@ -47,7 +42,6 @@ if (!args.js) {
   process.exit(1);
 }
 
-source = path.resolve(source);
 var outhtml = path.resolve(args.html);
 var outscript = path.resolve(args.js);
 var outScriptUri = path.relative(path.dirname(args.html), args.js);
@@ -63,6 +57,7 @@ function processSource() {
 }
 
 if (source) {
+  source = path.resolve(source);
   docText = fs.readFileSync(source, 'utf-8');
   processSource();
 } else if (!process.stdin.isTTY) {
